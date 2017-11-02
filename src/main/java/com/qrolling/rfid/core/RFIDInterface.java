@@ -1,7 +1,5 @@
 package com.qrolling.rfid.core;
 
-import com.phidget22.PhidgetException;
-import com.phidget22.RFID;
 import com.qrolling.rfid.services.TrackingService;
 
 /**
@@ -20,7 +18,9 @@ public interface RFIDInterface {
 
     void setTrackingService(TrackingService trackingService);
 
-    RFID getPhidgetReader();
+    void startListening(int timeToListen);
 
-    String getReaderCode() throws PhidgetException;
+    void close(long timeToClose);
+
+    String getReaderCode();
 }

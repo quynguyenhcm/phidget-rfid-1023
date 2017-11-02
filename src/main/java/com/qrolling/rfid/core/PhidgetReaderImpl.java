@@ -1,28 +1,14 @@
 package com.qrolling.rfid.core;
 
 import com.phidget22.*;
-import com.qrolling.rfid.entities.Entrance;
-import com.qrolling.rfid.entities.TrackingObject;
-import com.qrolling.rfid.entities.TrackingSession;
-import com.qrolling.rfid.services.TrackingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author Quy Nguyen (nguyenledinhquy@gmail.com) on 11/1/17
  */
 @Component
-public class PhidgetReaderImpl implements RFIDInterface {
+public class PhidgetReaderImpl extends BaseReader implements RFIDInterface {
     private RFID phidgetReader;
-
-    private int id;
-
-    private TrackingService trackingService;
-
-    private String readerCode;
-
 
     public PhidgetReaderImpl() throws PhidgetException {
         initiateReader();
@@ -30,7 +16,7 @@ public class PhidgetReaderImpl implements RFIDInterface {
 
     private void initiateReaderCode() {
         try {
-            readerCode = getReaderCode();
+            setReaderCode(String.valueOf(phidgetReader.getDeviceSerialNumber()));
         } catch (PhidgetException e) {
             e.printStackTrace();
         }
@@ -41,7 +27,7 @@ public class PhidgetReaderImpl implements RFIDInterface {
         phidgetReader = new RFID();
         initiateListener();
         initiateReaderCode();
-        System.out.println("RFID Reader Id: " + readerCode + " is now up and running");
+        System.out.println("RFID Reader Id: " + getReaderCode() + " is now up and running");
     }
 
 
@@ -62,61 +48,47 @@ public class PhidgetReaderImpl implements RFIDInterface {
         phidgetReader.addTagLostListener(new RFIDTagLostListener() {
             @Override
             public void onTagLost(RFIDTagLostEvent e) {
-                System.out.println("Tag lost: " + e.getTag());
+                System.out.println("Phidget 1023 tag lost: " + e.getTag());
                 exitZone(e.getTag());
-
             }
         });
     }
 
-    private void exitZone(String tag) {
+    @Override
+    public void startListening(int timeToListen) {
         try {
-            trackingService.exitZone(tag, this.getReaderCode());
-            System.out.println("Tag " + tag + " has exited zone " + this.getReaderCode());
+            System.out.println("\n\nGathering data for " + timeToListen + " seconds\n\n");
+            phidgetReader.open(timeToListen);
         } catch (PhidgetException e) {
             e.printStackTrace();
         }
-        notifyZoneChange();
     }
 
     @Override
-    public String getReaderCode() throws PhidgetException {
-        return String.valueOf(phidgetReader.getDeviceSerialNumber());
+    public void close(long timeToClose) {
+        try {
+            System.out.println("\n\nClosing the reader within " + timeToClose + " seconds\n\n");
+            Thread.sleep(timeToClose);
+            phidgetReader.close();
+        } catch (PhidgetException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public void addTagListener() {
         phidgetReader.addTagListener(new RFIDTagListener() {
             @Override
             public void onTag(RFIDTagEvent e) {
-
-                System.out.println("Tag read: " + e.getTag());
+                System.out.println("Phidget 1023 tag read: " + e.getTag());
                 enteringZone(e.getTag());
             }
         });
     }
 
-    private void enteringZone(String tagNumber) {
-        System.out.println("Tag read: " + tagNumber);
-
-        TrackingSession trackingSession = trackingService.findActiveTrackingSessionByTagNumber(tagNumber);
-
-        trackingService.startTracking(tagNumber, readerCode);
-        Entrance entrance = trackingService.addEntrance(tagNumber, readerCode);
-        if (entrance != null) {
-            System.out.println("Tag " + tagNumber + " is entering zone " + readerCode);
-        }
-        notifyZoneChange();
-    }
-
-    private void notifyZoneChange() {
-        List<TrackingObject> trackingObjects = trackingService.findObjectsInZone(readerCode);
-        if (!trackingObjects.isEmpty()) {
-            for (TrackingObject trackingObject : trackingObjects) {
-                System.out.println(trackingObject.getId() + " is in zone " + readerCode);
-            }
-        }
-    }
 
     @Override
     public void addErrorListener() {
@@ -166,26 +138,4 @@ public class PhidgetReaderImpl implements RFIDInterface {
         });
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public RFID getPhidgetReader() {
-        return phidgetReader;
-    }
-
-    public void setPhidgetReader(RFID phidgetReader) {
-        this.phidgetReader = phidgetReader;
-    }
-
-    @Override
-    @Autowired
-    public void setTrackingService(TrackingService trackingService) {
-        this.trackingService = trackingService;
-    }
 }
