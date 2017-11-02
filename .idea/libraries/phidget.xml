@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="phidget">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/lib" />
+      <root url="file://$PROJECT_DIR$/src/main/resources/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
