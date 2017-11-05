@@ -29,6 +29,10 @@ public class Entrance {
     @Temporal(TemporalType.TIMESTAMP)
     private Date enteringTime;
 
+    @Column(name = "EXITING_TIME", columnDefinition = "DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date exitingTime;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private TrackingStatus trackingStatus;
@@ -81,5 +85,13 @@ public class Entrance {
 
     public void setTrackingStatus(TrackingStatus trackingStatus) {
         this.trackingStatus = trackingStatus;
+    }
+
+    public Date getExitingTime() {
+        return exitingTime;
+    }
+
+    public void setExitingTime(Date exitingTime) {
+        this.exitingTime = exitingTime;
     }
 }

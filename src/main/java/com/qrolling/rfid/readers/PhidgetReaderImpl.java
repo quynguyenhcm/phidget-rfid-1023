@@ -1,6 +1,8 @@
-package com.qrolling.rfid.core;
+package com.qrolling.rfid.readers;
 
 import com.phidget22.*;
+import com.qrolling.rfid.core.BaseReader;
+import com.qrolling.rfid.core.RFIDInterface;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,6 +18,7 @@ public class PhidgetReaderImpl extends BaseReader implements RFIDInterface {
 
     private void initiateReaderCode() {
         try {
+            phidgetReader.setDeviceSerialNumber(92548);
             setReaderCode(String.valueOf(phidgetReader.getDeviceSerialNumber()));
         } catch (PhidgetException e) {
             e.printStackTrace();

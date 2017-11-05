@@ -31,6 +31,7 @@ public class TrackingDaoImpl implements TrackingDao {
         TrackingSession trackingSession = TrackingSession.Builder
                 .aTrackingSession()
                 .withTrackingObject(trackingObject)
+                .withStartTime(new Date())
                 .withTrackingStatus(TrackingStatus.ACTIVE)
                 .build();
         em.persist(trackingObject);
@@ -60,6 +61,7 @@ public class TrackingDaoImpl implements TrackingDao {
 
         if (!entrances.isEmpty()) {
             Entrance activeEntrance = (Entrance) entrances.get(0);
+            activeEntrance.setExitingTime(new Date());
             activeEntrance.setTrackingStatus(com.qrolling.rfid.entities.TrackingStatus.FINISHED);
             em.merge(activeEntrance);
         }

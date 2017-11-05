@@ -15,7 +15,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScans(value = {@ComponentScan("com.qrolling.rfid.dao"),
         @ComponentScan("com.qrolling.rfid.services"),
-        @ComponentScan("com.qrolling.rfid.core")})
+        @ComponentScan("com.qrolling.rfid.core"),
+        @ComponentScan("com.qrolling.rfid.readers")})
 public class AppConfig {
 
     @Bean
