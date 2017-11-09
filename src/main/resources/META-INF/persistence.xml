@@ -4,7 +4,7 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="LOCAL_PERSISTENCE">
+    <persistence-unit name="MY_SQL_PERSISTENCE">
         <description>Spring Hibernate JPA Configuration Example</description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.qrolling.rfid.entities.Visitor</class>
@@ -16,9 +16,26 @@
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/BLIND_SUPPORT"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="dec1001@Q"/>
+            <property name="javax.persistence.jdbc.password" value="d3333ec1001@Q"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="H2_IN_MEMORY_PERSISTENCE">
+        <description>Spring Hibernate JPA Configuration Example</description>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.qrolling.rfid.entities.Visitor</class>
+        <class>com.qrolling.rfid.entities.TrackingSession</class>
+        <class>com.qrolling.rfid.entities.TrackingObject</class>
+        <class>com.qrolling.rfid.entities.Entrance</class>
+        <class>com.qrolling.rfid.entities.Zone</class>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
 
     </persistence-unit>

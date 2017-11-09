@@ -12,9 +12,10 @@ public class MainApp {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
+        System.out.println("HELOooooooooooooooo");
         RFIDInterface reader = context.getBean(RFIDInterface.class);
-        reader.startListening(10000);
-        reader.close(5000);
+        reader.startListening(100000);
+        reader.close(50000);
         context.close();
     }
 }
