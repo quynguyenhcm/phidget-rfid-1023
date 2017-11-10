@@ -8,6 +8,21 @@
             <set />
           </value>
         </entry>
+        <entry key="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$APPLICATION_CONFIG_DIR$/consoles/db/f8645221-5438-4e60-ba7d-28c3e89fadd3/console.sql">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../TestJar/src/com/company/Main.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/.gitignore">
           <value>
             <set />
@@ -169,6 +184,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/qrolling/rfid/gui/MainApp.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/qrolling/rfid/readers.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/qrolling/rfid/readers/PhidgetReaderImpl.java">
           <value>
             <set />
           </value>

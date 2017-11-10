@@ -9,12 +9,12 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class MainApp {
     public static void main(String[] args) {
+
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
-
         RFIDInterface reader = context.getBean(RFIDInterface.class);
-        reader.startListening(10000);
-        reader.close(5000);
+        reader.startListening(100000);
+        reader.close(50000);
         context.close();
     }
 }

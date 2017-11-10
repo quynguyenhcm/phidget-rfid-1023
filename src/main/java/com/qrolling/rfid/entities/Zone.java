@@ -11,11 +11,12 @@ import javax.persistence.*;
         @NamedQuery(name = "findZoneByReaderCode"
                 , query = "SELECT z from Zone z where z.readerCode = :readerCode "),
         @NamedQuery(name = "findActiveObjectsByZone"
-                , query = "SELECT to from TrackingObject to  " +
+                , query = "SELECT distinct to from TrackingObject to  " +
                 "join TrackingSession t on t.trackingObject = to " +
                 "join Entrance  e on t = e.trackingSession " +
                 "join Zone z on e.zone = z " +
-                "where z.readerCode = :readerCode ")
+                "where z.readerCode = :readerCode " +
+                "and e.trackingStatus = 'ACTIVE'")
 })
 public class Zone {
     @Id

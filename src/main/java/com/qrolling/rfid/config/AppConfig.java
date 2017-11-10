@@ -15,13 +15,22 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScans(value = {@ComponentScan("com.qrolling.rfid.dao"),
         @ComponentScan("com.qrolling.rfid.services"),
-        @ComponentScan("com.qrolling.rfid.core")})
+        @ComponentScan("com.qrolling.rfid.core"),
+        @ComponentScan("com.qrolling.rfid.readers")})
 public class AppConfig {
+
+    //private final String MY_SQL_PERSISTENCE = "MY_SQL_PERSISTENCE";
+    private final String H2_IN_MEMORY_PERSISTENCE = "H2_IN_MEMORY_PERSISTENCE";
 
     @Bean
     public LocalEntityManagerFactoryBean geEntityManagerFactoryBean() {
         LocalEntityManagerFactoryBean factoryBean = new LocalEntityManagerFactoryBean();
-        factoryBean.setPersistenceUnitName("LOCAL_PERSISTENCE");
+        try {
+            factoryBean.setPersistenceUnitName(H2_IN_MEMORY_PERSISTENCE);
+        } catch (Exception e) {
+            System.out.println("Could not find MYSQL database. Running on in memory database, the data will be lost on application shutdown");
+            factoryBean.setPersistenceUnitName(H2_IN_MEMORY_PERSISTENCE);
+        }
         return factoryBean;
     }
 

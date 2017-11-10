@@ -6,6 +6,8 @@ import com.qrolling.rfid.services.TrackingService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,9 +21,11 @@ public class BaseReader {
 
     static Logger logger = Logger.getLogger(BaseReader.class);
 
+    private SimpleDateFormat NZ_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
     protected void exitZone(String tag) {
         trackingService.exitZone(tag, readerCode);
-        System.out.println("Tag " + tag + " has exited zone " + readerCode);
+        System.out.println("Tag " + tag + " has exited zone " + readerCode + " at " + NZ_DATE_FORMAT.format(new Date()));
         logger.info("LOGERRRRRRRR   Tag " + tag + " has exited zone " + readerCode);
         notifyZoneChange();
     }
@@ -32,7 +36,7 @@ public class BaseReader {
         trackingService.startTracking(tagNumber, readerCode);
         Entrance entrance = trackingService.addEntrance(tagNumber, readerCode);
         if (entrance != null) {
-            System.out.println("Tag " + tagNumber + " is entering zone " + readerCode);
+            System.out.println("Tag " + tagNumber + " accessed zone " + readerCode + " at " + NZ_DATE_FORMAT.format(entrance.getEnteringTime()));
         }
         notifyZoneChange();
     }
