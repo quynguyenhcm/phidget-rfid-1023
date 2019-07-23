@@ -5,7 +5,7 @@ import com.qrolling.rfid.entities.Visitor;
 import java.util.List;
 
 /**
- * @author Quy Nguyen (nguyenledinhquy@gmail.com) on 10/29/17
+ * @author Quy Nguyen (nguyenledinhquy@gmail.com) on 10/29/18
  */
 public interface VisitorDao {
     void add(Visitor visitor);
