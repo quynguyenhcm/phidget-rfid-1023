@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         @ComponentScan("com.qrolling.rfid.services"),
         @ComponentScan("com.qrolling.rfid.core"),
         @ComponentScan("com.qrolling.rfid.readers")})
-public class AppConfig {
+    public class AppConfig {
 
     //private final String MY_SQL_PERSISTENCE = "MY_SQL_PERSISTENCE";
     private final String H2_IN_MEMORY_PERSISTENCE = "H2_IN_MEMORY_PERSISTENCE";

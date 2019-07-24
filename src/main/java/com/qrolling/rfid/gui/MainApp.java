@@ -2,6 +2,7 @@ package com.qrolling.rfid.gui;
 
 import com.qrolling.rfid.config.AppConfig;
 import com.qrolling.rfid.core.RFIDInterface;
+import com.qrolling.rfid.utils.ConfigurationHelper;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
@@ -13,8 +14,9 @@ public class MainApp {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
         RFIDInterface reader = context.getBean(RFIDInterface.class);
-        reader.startListening(100000);
-        reader.close(50000);
+        int rfidPort = ConfigurationHelper.getInt("rfid.port");
+        reader.startListening(rfidPort);
+        reader.close(rfidPort);
         context.close();
     }
 }
